@@ -74,6 +74,7 @@
                     var temperature = data.analogTemperature;
                     document.getElementById("temp").innerHTML = "<i class='icon fas fa-thermometer-half'></i> Temperature: " + temperature;
                     saveTemperature(temperature);
+                    sendToTelegram(temperature); // Add this line to send temperature to Telegram
                     hideLoading();
                 } else {
                     console.log("Invalid payload format: missing 'analogTemperature' field");
@@ -108,6 +109,24 @@
             if (storedTemperatures.length > 10) {
                 storedTemperatures.shift(); // Remove the oldest temperature
             }
+        }
+
+        function sendToTelegram(temperature) {
+            const botToken = '6767960251:AAGbbey3zIh1VVBHuwQw0HiiRxyJqMSNh0I';
+            const chatId = '1640817113';
+            const message = `Temperature: ${temperature} C`;
+
+            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            // Make an HTTP request to the Telegram Bot API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Message sent to Telegram:', data);
+                })
+                .catch(error => {
+                    console.error('Error sending message to Telegram:', error);
+                });
         }
     </script>
 </body>

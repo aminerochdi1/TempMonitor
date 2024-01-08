@@ -19,4 +19,6 @@ The temperature value is dynamically updated as new data arrives.
 Color-coded icons indicate the temperature status (e.g., green for normal, yellow for elevated, and red for high temperatures).
 This project is not only educational but also practical, offering a convenient way to monitor temperature remotely.
 
+#useful-links
+telegram bot [here](https://t.me/TempNoitifierBot)
 source code [here](https://github.com/aminerochdi1/TempMonitor/blob/master/build.html)

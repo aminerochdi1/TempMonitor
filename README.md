@@ -36,3 +36,17 @@ Make sure that you have the required libraries (ESP8266WiFi, PubSubClient, Ardui
 # useful-links
 telegram bot [here](https://t.me/TempNoitifierBot)
 source code [here](https://github.com/aminerochdi1/TempMonitor/blob/master/build.html)
+
+#Required tools
+- esp8266 wifi
+![image](https://github.com/aminerochdi1/TempMonitor/assets/84997432/caade76c-8ec7-4519-9916-1dc1be1de7cc)
+
+- DHT sensor
+![image](https://github.com/aminerochdi1/TempMonitor/assets/84997432/aff1d2da-aaf9-4056-9c57-f2166c107b84)
+
+- Arduino IDE
+![image](https://github.com/aminerochdi1/TempMonitor/assets/84997432/34a08b48-4c74-4b54-a63f-5997e8ad8293)
+
+
+
+

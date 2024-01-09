@@ -8,9 +8,9 @@
 DHT dht(DHTPIN, DHTTYPE); // Initialize DHT sensor
 
 // Update these with values suitable for your network.
-const char* ssid = "FibreOptique";
-const char* password = "dada10201212";
-const char* mqtt_server = "91.121.93.94";  // test.mosquitto.org
+const char* ssid = ""; // YOUR WIFI SSID
+const char* password = ""; // YOUR WIFI PASSWORD
+const char* mqtt_server = "";  //YOUR ADRESS ( execute this command 'ping test.mosquitto.org' ) 
 
 WiFiClient espClient;
 PubSubClient client(espClient);

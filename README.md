@@ -1,3 +1,6 @@
+![image](https://github.com/aminerochdi1/TempMonitor/assets/84997432/c680b233-c593-4596-a6be-91997ea9f8a3)
+
+
 # TempMonitor
 
 The Temperature Monitor is a simple yet effective project that allows you to remotely monitor and display temperature data in real-time. The project uses an ESP8266 microcontroller connected to a DHT11 sensor for measuring ambient temperature. The collected data is then sent to a web interface using MQTT (Message Queuing Telemetry Transport) protocol.

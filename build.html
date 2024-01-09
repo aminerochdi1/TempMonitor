@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,43 +46,68 @@
             font-size: 36px;
             color: #4CAF50;
         }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #ledOn {
+            background-color: #3498db; /* Blue */
+            color: #fff;
+        }
+
+        #ledOff {
+            background-color: #e74c3c; /* Red */
+            color: #fff;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
 </head>
+
 <body>
     <div id="loading">
         <i class="fas fa-spinner fa-spin"></i> Connecting...
     </div>
     <h1>Temperature Monitor</h1>
     <p id="temp"><i class="icon fas fa-thermometer-half"></i> Temperature: </p>
+    <button class="button" id="ledOn" onclick="toggleLED(1)"><i class="icon fas fa-lightbulb"></i> Turn On LED</button>
+    <button class="button" id="ledOff" onclick="toggleLED(0)"><i class="icon fas fa-lightbulb"></i> Turn Off LED</button>
+
     <script>
         var mqttClient = new Paho.MQTT.Client("91.121.93.94", 8080, "web_" + parseInt(Math.random() * 100, 10));
-
+    
         var storedTemperatures = [];
-
+    
         mqttClient.onConnectionLost = function (responseObject) {
             console.log("Connection lost: " + responseObject.errorMessage);
             hideLoading();
             // Handle reconnection if necessary
         };
 
+        // CHECK MQQT CLIENT WORKING PROPERLY
+        console.log(mqttClient);
+    
         mqttClient.onMessageArrived = function (message) {
             console.log("Message Arrived: " + message.payloadString);
-
+    
             try {
                 var data = JSON.parse(message.payloadString);
                 if (data.hasOwnProperty("analogTemperature")) {
                     var temperature = data.analogTemperature;
                     document.getElementById("temp").innerHTML = "<i class='icon fas fa-thermometer-half'></i> Temperature: " + temperature;
                     saveTemperature(temperature);
-
+    
                     // Check temperature range before sending to Telegram
-                    if (temperature > 9) {
+                    if (temperature > 10) {
                         sendToTelegram(temperature, 'High Temperature');
                     } else if (temperature < 2) {
                         sendToTelegram(temperature, 'Low Temperature');
                     }
-
+    
                     hideLoading();
                 } else {
                     console.log("Invalid payload format: missing 'analogTemperature' field");
@@ -90,7 +116,7 @@
                 console.log("Error parsing JSON: " + error);
             }
         };
-
+    
         mqttClient.connect({
             onSuccess: function () {
                 console.log("Connected to MQTT broker");
@@ -102,14 +128,14 @@
             },
             useSSL: false,
         });
-
+    
         function hideLoading() {
             var loadingDiv = document.getElementById("loading");
             if (loadingDiv) {
                 loadingDiv.style.display = "none";
             }
         }
-
+    
         function saveTemperature(temperature) {
             storedTemperatures.push(temperature);
             // Limit the number of stored temperatures (adjust as needed)
@@ -117,14 +143,14 @@
                 storedTemperatures.shift(); // Remove the oldest temperature
             }
         }
-
+    
         function sendToTelegram(temperature, temperatureCategory) {
             const botToken = '6767960251:AAGbbey3zIh1VVBHuwQw0HiiRxyJqMSNh0I';
             const chatId = '1640817113';
             const message = `${temperatureCategory}: ${temperature} C`;
-
+    
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
-
+    
             // Make an HTTP request to the Telegram Bot API
             fetch(apiUrl)
                 .then(response => response.json())
@@ -135,6 +161,22 @@
                     console.error('Error sending message to Telegram:', error);
                 });
         }
+        // TOGGLE BUTTON ON OR OFF
+        
+        function toggleLED(value) {
+    // Check if the MQTT client is connected before publishing
+    if (mqttClient.isConnected()) {
+        var message = new Paho.MQTT.Message(value.toString());
+        message.destinationName = "device/led";
+        mqttClient.send(message);
+    } else {
+        console.log("MQTT client is not connected. Cannot publish.");
+    }
+}
+
     </script>
+    
+
 </body>
+
 </html>

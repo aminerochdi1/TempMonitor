@@ -34,8 +34,7 @@ This project is not only educational but also practical, offering a convenient w
 Make sure that you have the required libraries (ESP8266WiFi, PubSubClient, ArduinoJson, DHT) installed in your Arduino IDE.
 
 # useful-links
-telegram bot [here](https://t.me/TempNoitifierBot)
-source code [here](https://github.com/aminerochdi1/TempMonitor/blob/master/build.html)
+source code [here](https://github.com/aminerochdi1/TempMonitor/blob/master/)
 
 # Required tools
 - esp8266 wifi

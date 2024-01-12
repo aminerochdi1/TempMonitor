@@ -78,7 +78,7 @@
     <button class="button" id="ledOff" onclick="toggleLED(0)"><i class="icon fas fa-lightbulb"></i> Turn Off LED</button>
 
     <script>
-        var mqttClient = new Paho.MQTT.Client("91.121.93.94", 8080, "web_" + parseInt(Math.random() * 100, 10));
+        var mqttClient = new Paho.MQTT.Client("YOUR ADRESS", 8080, "web_" + parseInt(Math.random() * 100, 10));
     
         var storedTemperatures = [];
     
@@ -145,8 +145,8 @@
         }
     
         function sendToTelegram(temperature, temperatureCategory) {
-            const botToken = '6767960251:AAGbbey3zIh1VVBHuwQw0HiiRxyJqMSNh0I';
-            const chatId = '1640817113';
+            const botToken = 'YOUR APU TOKEN';
+            const chatId = 'YOUR CHAT ID';
             const message = `${temperatureCategory}: ${temperature} C`;
     
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
